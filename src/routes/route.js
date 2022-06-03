@@ -17,6 +17,7 @@ router.get("/movies",function(req,res){
     res.send(movies);
 })
 router.get("movies/:indexNumber",function(req,res){
+    let movies=['Rang de basanti','The shining','Lord of the Rings','Batman begins'];
     let index=req.params.indexNumber;
     if(movies[index]===undefined){
     res.send("request you to see valid index!")}
@@ -42,10 +43,27 @@ router.get("/films",function(req,res){
 })
 
 router.get("films/:filmId",function(req,res){
+
+    let films=[
+        {
+            id:1,name:"The shining"
+        },
+        {
+            id:2,name:"Incending"
+        },
+        {
+            id:3,name:"Rang de basanti"
+        },
+        {
+            id:4, name:"Batman begins"
+        },
+    ];
+    
     let filmId=req.params.filmId;
     let output=films.find((x) =>x.id===filmId);
-    if (output ===undefined) res.send("no movies")
+    if (output ===undefined) {res.send("no movies")}
     res.send(output);
+    res.send('no')
 
 
 });
