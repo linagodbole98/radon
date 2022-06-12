@@ -24,7 +24,7 @@ router.get("/getBooksData", bookController.getBooksData)
 
 router.get("/getBooksWithAuthorDetailsandpub", bookController.getBooksWithAuthorDetails)
 
-router.put("/Updatekey",bookController.Upadatekey)
+router.put("/Updatekey/:id",bookController.Upadatekey)
 
 router.put("/Updateprice", bookController.Upadateprice)
 

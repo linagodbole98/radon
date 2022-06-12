@@ -71,8 +71,8 @@ const Upadatekey=async function(req,res){
 }
 // ==========================updatebookprice===================================================
 const Upadateprice =async function (req, res) {
-    let authorRating = await zuthorModel.find({rating:{$gt:3.5}}).select("_id")
-    let updatedprice= await BookModel.updateMany({author_id:authorRating}, {$inc: {price:+10}})
+    let authorRating = await authorModel.find({rating:{$gt:3.5}}).select("_id")
+    let updatedprice= await bookModel.updateMany({author_id:rating}, {$inc: {price:+10}})
     res.send({data:updatedprice })
 
 }
