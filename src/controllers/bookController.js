@@ -27,39 +27,56 @@ const getBooksData= async function (req, res) {
     res.send({data: books})
 }
 
-const updateBooks = async function (req, res) {
-    // update hardcover to true for few books
-    let hardCOverPublishers = await publishModel.find({  Published: { $in: ['Penguin', 'HarperCollins'] } }).select({ _id: 1 })
-    let arrayOfPublishers = []
+// const updateBooks = async function (req, res) {
+//     // update hardcover to true for few books
+//     let hardCOverPublishers = await publishModel.find({  Published: { $in: ['Penguin', 'HarperCollins'] } }).select({ _id: 1 })
+//     let arrayOfPublishers = []
 
-    for (let i = 0; i < hardCOverPublishers.length; i++) {
-        let objId = hardCOverPublishers[i]._id
-        arrayOfPublishers.push(objId)
-    }
+//     for (let i = 0; i < hardCOverPublishers.length; i++) {
+//         let objId = hardCOverPublishers[i]._id
+//         arrayOfPublishers.push(objId)
+//     }
 
-    let books = await bookModel.updateMany({ publish: { $in: arrayOfPublishers } }, { isHardCover: true })
+//     let books = await bookModel.updateMany({ publish: { $in: arrayOfPublishers } }, { isHardCover: true })
 
-    res.send({ data: books })
+//     res.send({ data: books })
 
-}
+// }
 
-const updatePrice= async function(req,res){
-    let id= req.params.id
-    let updatedPrice= await bookModel.findByIdAndUpdate(id, req.body,{
-        new:true
-    })
-    res.send({msg:updatedPrice})
-}
+// const updatePrice= async function(req,res){
+//     let id= req.params.id
+//     let updatedPrice= await bookModel.findByIdAndUpdate(id, req.body,{
+//         new:true
+//     })
+//     res.send({msg:updatedPrice})
+// }
 
-const updateBookData= async function(res,req){
+// const updateBookData= async function(res,req){
     
     
-    let updateBook= await bookModel.find( { publisher:"62a219d02a6954e5b7652f6a"} )
-    // let updateBook2= await BookModel.find( { publisher:"62a232c50e8fcd4d29dc7e2b"} )
-    console.log(updateBook)
-    // console.log(updateBook2)
-}
+//     let updateBook= await bookModel.find( { publisher:"62a219d02a6954e5b7652f6a"} )
+//     // let updateBook2= await BookModel.find( { publisher:"62a232c50e8fcd4d29dc7e2b"} )
+//     console.log(updateBook)
+//     // console.log(updateBook2)
+// }
+// ===========================Upadatekey=========================================
 
+
+const Upadatekey=async function(req,res){
+    let data=await publishModel.find({Published :"HarperCollins"}).select("_id")
+    let data2=await publishModel.find({Published :"Penguin"}).select("_id")
+    let UpdateHardCover=await bookModel.updateMany({publish_id:data},{$set:{isHardCover:true}})
+    let UpdateHardCover2=await bookModel.updateMany({publish_id:data2},{$set:{isHardCover:true}})
+    res.send({msg:UpdateHardCover,UpdateHardCover2})
+}
+// ==========================updatebookprice===================================================
+const Upadateprice =async function (req, res) {
+    let authorRating = await zuthorModel.find({rating:{$gt:3.5}}).select("_id")
+    let updatedprice= await BookModel.updateMany({author_id:authorRating}, {$inc: {price:+10}})
+    res.send({data:updatedprice })
+
+}
+// ==================================================================================================
 
 const getBooksWithAuthorDetails = async function (req, res) {
 
@@ -72,6 +89,6 @@ const getBooksWithAuthorDetails = async function (req, res) {
 module.exports.createBook= createBook
 module.exports.getBooksData= getBooksData
 module.exports.getBooksWithAuthorDetails = getBooksWithAuthorDetails
-module.exports.updateBooks = updateBooks
-module.exports.updatePrice= updatePrice
-module.exports.updateBookData= updateBookData
+module.exports.Upadatekey= Upadatekey
+module.exports.Upadateprice= Upadateprice
+
