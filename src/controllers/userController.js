@@ -2,14 +2,14 @@ const jwt = require("jsonwebtoken");
 const { updateOne } = require("../models/userModel");
 const userModel = require("../models/userModel");
 
-const createUser = async function (abcd, xyz) {
+const createUser = async function (req, res) {
   //You can name the req, res objects anything.
   //but the first parameter is always the request 
   //the second parameter is always the response
-  let data = abcd.body;
+  let data = req.body;
   let savedData = await userModel.create(data);
-  console.log(abcd.newAtribute);
-  xyz.send({ msg: savedData });
+  console.log(req.newAtribute);
+  res.send({ msg: savedData });
 };
 
 const loginUser = async function (req, res) {
@@ -36,7 +36,7 @@ const loginUser = async function (req, res) {
       organisation: "FunctionUp",
     },
     "functionup-radon"
-  );
+  ); 
   res.setHeader("x-auth-token", token);
   res.send({ status: true, token: token });
 };
@@ -104,4 +104,4 @@ module.exports.createUser = createUser;
 module.exports.getUserData = getUserData;
 module.exports.updateUser = updateUser;
 module.exports.loginUser = loginUser;
-module.exports.deleteuser = deleteuser
+module.exports.deleteuser = deleteuser;
