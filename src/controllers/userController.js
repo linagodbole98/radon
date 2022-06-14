@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const { updateOne } = require("../models/userModel");
 const userModel = require("../models/userModel");
 
 const createUser = async function (abcd, xyz) {
@@ -31,7 +32,7 @@ const loginUser = async function (req, res) {
   let token = jwt.sign(
     {
       userId: user._id.toString(),
-      batch: "thorium",
+      batch: "Radon",
       organisation: "FunctionUp",
     },
     "functionup-radon"
@@ -84,7 +85,23 @@ const updateUser = async function (req, res) {
   res.send({ status: updatedUser, data: updatedUser });
 };
 
+
+const deleteuser = async function (req,res){
+
+  let userId = req.params.userId;
+  let user = await userModel.findById(userId);
+  if (!user) {
+    return res.send("No such user exists");
+  }
+    //delete
+  let userData = req.body;
+  let deleteUser = await userModel.findOneAndDelete({ _id: userId }, userData);
+  // res.send({ status: updatedUser, data: updatedUser });
+  res.send({status:deleteUser,data:deleteUser});
+  }
+
 module.exports.createUser = createUser;
 module.exports.getUserData = getUserData;
 module.exports.updateUser = updateUser;
 module.exports.loginUser = loginUser;
+module.exports.deleteuser = deleteuser
